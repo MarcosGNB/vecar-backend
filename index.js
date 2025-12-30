@@ -19,21 +19,13 @@ const allowedOrigins = [
   'https://vapoenergy.com',
   'https://www.vapoenergy.com',
   'http://localhost:3000',
-  'http://localhost:5173', // Vite default
+  'http://localhost:5173',
   'https://vecar.vercel.app',
   process.env.FRONTEND_URL
 ].filter(Boolean);
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    // Permitir peticiones sin origen (como apps móviles o curl)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
-      callback(null, true);
-    } else {
-      callback(new Error('No permitido por CORS'));
-    }
-  },
+  origin: allowedOrigins,
   optionsSuccessStatus: 200,
 };
 
