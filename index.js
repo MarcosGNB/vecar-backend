@@ -21,6 +21,8 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
   'https://vecar.vercel.app',
+  'https://vecarr.com',
+  'https://www.vecarr.com',
   process.env.FRONTEND_URL
 ].filter(Boolean);
 
