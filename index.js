@@ -14,9 +14,26 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
-// Configuración de CORS para permitir solo el frontend en Vercel
+// Configuración de CORS
+const allowedOrigins = [
+  'https://vapoenergy.com',
+  'https://www.vapoenergy.com',
+  'http://localhost:3000',
+  'http://localhost:5173', // Vite default
+  'https://vecar.vercel.app',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
 const corsOptions = {
-  origin: ['https://vapoenergy.com', 'https://www.vapoenergy.com', 'http://localhost:3000'],
+  origin: (origin, callback) => {
+    // Permitir peticiones sin origen (como apps móviles o curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
+      callback(null, true);
+    } else {
+      callback(new Error('No permitido por CORS'));
+    }
+  },
   optionsSuccessStatus: 200,
 };
 
